@@ -6,6 +6,7 @@ public enum CamundaEnums {
     COLLECTION("collection"),
     IS_ODD("isOdd"),
     ITEM("item"),
+    BUSINESS_KEY("businessKey"),
     PROJECT_PROCESS("my-project-process");
 
     private String value;

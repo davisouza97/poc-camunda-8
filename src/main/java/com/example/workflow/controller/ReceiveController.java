@@ -1,8 +1,7 @@
 package com.example.workflow.controller;
 
 
-import com.example.workflow.enums.CamundaEnums;
-import org.camunda.bpm.engine.RuntimeService;
+import com.example.workflow.service.CorrelationReceiveService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,24 +13,18 @@ import org.springframework.web.bind.annotation.RestController;
 public class ReceiveController {
 
     @Autowired
-    private RuntimeService runtimeService;
+    private CorrelationReceiveService correlationReceiveService;
 
     @PostMapping(value = "/v1/start")
     public ResponseEntity<Void> start(@RequestParam(required = false, name = "id") String id) {
-        runtimeService
-                .startProcessInstanceByKey(
-                        CamundaEnums.PROJECT_PROCESS.getValue(),
-                        id);
+        correlationReceiveService.start(id);
 
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @PostMapping(value = "/v1/receive")
     public ResponseEntity<Void> receive(@RequestParam(required = false, name = "id") String id) {
-        runtimeService.createMessageCorrelation(CamundaEnums.RECEIVE_CORRELATION.getValue())
-                .processInstanceBusinessKey(id)
-                .correlate();
-
+        correlationReceiveService.execute(id);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
