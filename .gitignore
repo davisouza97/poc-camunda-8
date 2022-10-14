@@ -23,3 +23,10 @@
 hs_err_pid*
 target/classes/application.yaml
 target/classes/process.bpmn
+.idea/workspace.xml
+.idea/vcs.xml
+.idea/sonarlint/issuestore/index.pb
+.idea/misc.xml
+.idea/jarRepositories.xml
+.idea/encodings.xml
+.idea/compiler.xml
