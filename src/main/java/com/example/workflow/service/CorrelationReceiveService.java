@@ -6,6 +6,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 
+import static com.example.workflow.enums.CamundaEnums.ORDER_ID;
+import static com.example.workflow.enums.CamundaEnums.PROJECT_PROCESS;
+
 @Service
 public class CorrelationReceiveService {
 
@@ -15,19 +18,19 @@ public class CorrelationReceiveService {
 
     public void start(String orderId) {
         HashMap<String, Object> var = new HashMap<>();
-        var.put("orderId", Integer.parseInt(orderId));
-        zeebeClient.newCreateInstanceCommand().bpmnProcessId("Process_a24708ff-ab33-4a6b-9719-fd5961c7e1e9")
+        var.put(ORDER_ID.getValue(), Integer.parseInt(orderId));
+        zeebeClient.newCreateInstanceCommand().bpmnProcessId(PROJECT_PROCESS.getValue())
                 .latestVersion()
                 .variables(var)
                 .send()
                 .join();
     }
 
-    //    @JobWorker
     public void execute(String orderId) {
-//        zeebeClient.newPublishMessageCommand().
-
-        zeebeClient.newPublishMessageCommand().messageName("receiveMessage").correlationKey(orderId).send();
+        zeebeClient.newPublishMessageCommand()
+                .messageName("receiveMessage")
+                .correlationKey(orderId)
+                .send();
     }
 
 
