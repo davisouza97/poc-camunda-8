@@ -18,8 +18,8 @@ public class CorrelationReceiveService {
 
     public void start(String orderId) {
         HashMap<String, Object> var = new HashMap<>();
-        var.put(ORDER_ID.getValue(), Integer.parseInt(orderId));
-        zeebeClient.newCreateInstanceCommand().bpmnProcessId(PROJECT_PROCESS.getValue())
+        var.put("returnId", Integer.parseInt(orderId));
+        zeebeClient.newCreateInstanceCommand().bpmnProcessId("OMS_MARKETPLACE_RETURN")
                 .latestVersion()
                 .variables(var)
                 .send()

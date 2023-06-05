@@ -18,13 +18,13 @@ public class DelegateOne {
     @Autowired
     private LogUtil log;
 
-    @JobWorker(type = "one")
+    @JobWorker(type = "verifyItemAndAccrualStatusTask")
     public Map<String, Object> execute(final ActivatedJob job) {
-        Integer businessKey = (Integer) job.getVariablesAsMap().get("orderId");
+        Integer businessKey = (Integer) job.getVariablesAsMap().get("returnId");
         log.logStart("DelegateOne", businessKey);
-        String isOdd = businessKey % 2 != 0 ? "YES" : "NO";
+//        String isOdd = businessKey % 2 != 0 ? "YES" : "NO";
         HashMap<String, Object> variables = new HashMap<>();
-        variables.put(IS_ODD.getValue(), isOdd);
+        variables.put("allItemsCompleted", "NO");
         log.logEnd("DelegateOne", businessKey);
         return variables;
     }
